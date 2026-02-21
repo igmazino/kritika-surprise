@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>For Kritika </title>
+
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&family=Poppins:wght@300;400;500&display=swap" rel="stylesheet">
+
+<style>
+:root{
+--pink:#ff4da6;
+--softPink:#ffd6ec;
+--white:#ffffff;
+}
+
+*{margin:0;padding:0;box-sizing:border-box;}
+
+body{
+height:100vh;
+background:linear-gradient(135deg,#fff0f7,#ffd6ec);
+font-family:'Poppins',sans-serif;
+overflow:hidden;
+display:flex;
+align-items:center;
+justify-content:center;
+color:#d63384;
+}
+
+/* Hearts falling from top */
+.heart{
+position:fixed;
+top:-20px;
+font-size:20px;
+animation:fall linear infinite;
+opacity:0.7;
+pointer-events:none;
+}
+
+@keyframes fall{
+0%{transform:translateY(0) rotate(0deg);}
+100%{transform:translateY(110vh) rotate(360deg);}
+}
+
+.screen{
+position:absolute;
+width:100%;
+height:100%;
+display:flex;
+flex-direction:column;
+align-items:center;
+justify-content:center;
+text-align:center;
+padding:20px;
+transition:0.7s ease;
+}
+
+.hidden{
+opacity:0;
+pointer-events:none;
+transform:scale(0.95);
+}
+
+h1{
+font-family:'Playfair Display',serif;
+margin-bottom:15px;
+}
+
+.highlight{
+color:var(--pink);
+text-shadow:0 0 15px rgba(255,77,166,0.4);
+}
+
+button{
+padding:12px 35px;
+border-radius:30px;
+border:2px solid var(--pink);
+background:white;
+color:var(--pink);
+cursor:pointer;
+margin-top:20px;
+font-weight:500;
+transition:0.3s;
+}
+
+button:hover{
+background:var(--pink);
+color:white;
+box-shadow:0 0 20px var(--pink);
+}
+
+input{
+background:transparent;
+border:none;
+border-bottom:2px solid var(--pink);
+color:#d63384;
+font-size:22px;
+text-align:center;
+width:150px;
+outline:none;
+margin-top:20px;
+}
+
+/* Gift Box */
+.gift{
+width:160px;
+height:160px;
+position:relative;
+margin-top:40px;
+cursor:pointer;
+}
+
+.box{
+width:100%;
+height:100%;
+background:var(--pink);
+border-radius:15px;
+position:absolute;
+box-shadow:0 15px 30px rgba(255,77,166,0.4);
+}
+
+.lid{
+width:100%;
+height:40px;
+background:#ff80bf;
+border-radius:10px;
+position:absolute;
+top:-20px;
+transition:0.8s ease;
+}
+
+.qr{
+position:absolute;
+width:100%;
+height:100%;
+background:white;
+border-radius:15px;
+display:flex;
+align-items:center;
+justify-content:center;
+transform:scale(0);
+transition:0.8s ease;
+}
+
+.qr img{
+width:90%;
+border-radius:10px;
+}
+
+.open .lid{
+transform:translateY(-120px) rotate(-10deg);
+opacity:0;
+}
+
+.open .qr{
+transform:scale(1.2);
+}
+
+.typewriter{
+max-width:400px;
+line-height:1.8;
+margin-top:20px;
+font-style:italic;
+color:#b03060;
+}
+</style>
+</head>
+
+<body>
+
+<script>
+for(let i=0;i<25;i++){
+let h=document.createElement("div");
+h.className="heart";
+h.innerHTML="";
+h.style.left=Math.random()*100+"vw";
+h.style.fontSize=(15+Math.random()*20)+"px";
+h.style.animationDuration=(5+Math.random()*5)+"s";
+h.style.animationDelay=Math.random()*5+"s";
+document.body.appendChild(h);
+}
+</script>
+
+<!-- Screen 1 -->
+<div id="s1" class="screen">
+<h1>This page is only for someone extremely special…</h1>
+<p>If your name is <span class="highlight">Kritika</span>… you may continue </p>
+<button onclick="next(1,2)">Enter Gently</button>
+</div>
+
+<!-- Screen 2 -->
+<div id="s2" class="screen hidden">
+<h1 class="highlight">Enter the magic number</h1>
+<input type="password" id="pass">
+<button onclick="check()">Unlock</button>
+</div>
+
+<!-- Screen 3 -->
+<div id="s3" class="screen hidden">
+<h1 class="highlight" style="font-size:40px;">Kritika</h1>
+<div id="msg" class="typewriter"></div>
+</div>
+
+<!-- Screen 4 -->
+<div id="s4" class="screen hidden">
+<h1>A little surprise for the most beautiful girl in my world…</h1>
+
+<div class="gift" id="gift" onclick="openGift()">
+<div class="lid"></div>
+<div class="box"></div>
+<div class="qr">
+<img src="qr.jpg">
+</div>
+</div>
+
+<p style="margin-top:30px;opacity:0.8;">
+Scan this… and discover how much you mean to me 
+</p>
+</div>
+
+<script>
+function next(a,b){
+document.getElementById("s"+a).classList.add("hidden");
+setTimeout(()=>{
+document.getElementById("s"+b).classList.remove("hidden");
+},600);
+}
+
+function check(){
+if(document.getElementById("pass").value==="14"){
+next(2,3);
+setTimeout(typeWriter,800);
+}else{
+alert("That’s not your special number ");
+}
+}
+
+let text="Out of all the days in the year… this one shines the brightest. Because the most beautiful soul was born today. Kritika… you are my favorite miracle. ";
+let i=0;
+
+function typeWriter(){
+if(i<text.length){
+document.getElementById("msg").innerHTML+=text.charAt(i);
+i++;
+setTimeout(typeWriter,50);
+}else{
+setTimeout(()=>next(3,4),2000);
+}
+}
+
+function openGift(){
+document.getElementById("gift").classList.toggle("open");
+}
+</script>
+
+</body>
+</html>
